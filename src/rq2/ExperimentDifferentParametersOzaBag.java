@@ -43,6 +43,7 @@ public class ExperimentDifferentParametersOzaBag {
 				for(int j = 0; j < fadingFactors.length; j++){
 					
 					for(int r = 0; r < 5; r++){
+		
 						int randomInt = randomGenerator.nextInt(1000);					
 
 						//writer = new FileWriter("parametersSettings/"+dataset+i+"-"+j+cls+".txt");
@@ -67,6 +68,8 @@ public class ExperimentDifferentParametersOzaBag {
 						TaskThread thread = new TaskThread((moa.tasks.Task) currentTask);
 
 						thread.start();
+						
+						
 					
 					}
 					

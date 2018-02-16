@@ -4,31 +4,48 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 import java.util.StringTokenizer;
 
-public class ExtraiPerformances {
+public class ExtraiPerformancesParameters {
 
 	public static void main(String args[]) {
 
 		int[] ensembleSizes = { 10, 30, 50 };
 		double[] fadingFactors = { 0.999, 0.99, 0.9 };
-		int[] treeSizes = { 2, 4, 6 };
 
-		String dataset = "fabric.arff";
-		String cls = "WFLARF";
-		for (int i = 0; i < ensembleSizes.length; i++) {
-			for (int j = 0; j < fadingFactors.length; j++) {
-				for (int m = 0; m < treeSizes.length; m++) {
+		String cls = "WFLOzaBag";
+		Random randomGenerator = new Random();
+		String[] datasets = { "fabric", "camel", "brackets", "tomcat", "jgroups", "neutron" };
+
+		String pathWindows = "C:/ProjetosSoftware/fse2018/";
+		String pathMac = "/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/";
+
+		boolean isWindows = true;
+		String path = "";
+		if (isWindows) {
+			path = pathWindows;
+		} else {
+			path = pathMac;
+		}
+
+		for (int d = 0; d < datasets.length; d++) {
+			for (int i = 0; i < ensembleSizes.length; i++) {
+				for (int j = 0; j < fadingFactors.length; j++) {
+
 					Double recall0Med = 0.0;
 					Double recall1Med = 0.0;
 					Double gmeanMed = 0.0;
+					
+					for (int r = 0; r < 5; r++) {
 
-					for (int s = 0; s < 5; s++) {
+						
 
 						BufferedReader br = null;
 						try {
-							br = new BufferedReader(new FileReader("paramSettingsEval/" + dataset + "("
-									+ ensembleSizes[i] + "-" + fadingFactors[j] +"-" + treeSizes[m] + ")" + cls + s + ".csv"));
+							br = new BufferedReader(
+									new FileReader("RQ2/ParamEval/" + datasets[d] +"/"+datasets[d]+ "(" + ensembleSizes[i] + "-"
+											+ fadingFactors[j] + ")" + cls + r + ".csv"));
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -44,8 +61,12 @@ public class ExtraiPerformances {
 						int ct = 0;
 						try {
 
+							
 							while ((strAux = br.readLine()) != null) {
-								if (ct != 0) {
+								
+								if (ct > 0) {
+									
+									//System.out.println(ct);
 									strTok = new StringTokenizer(strAux, ",");
 
 									strTok.nextToken();
@@ -72,18 +93,20 @@ public class ExtraiPerformances {
 							recall0Med += recall0;
 							recall1Med += recall1;
 							gmeanMed += gmean;
+							
+							ct = 0;
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
+						ct = 0;
 					}
-					System.out.println(recall0Med / 5 + "\t" + recall1Med / 5 + "\t" + gmeanMed / 5);
+					System.out.println(datasets[d]+"\t"+recall0Med / 5 + "\t" + recall1Med / 5 + "\t" + gmeanMed / 5);
 
 				}
 			}
-
 		}
+
 	}
 
 }
