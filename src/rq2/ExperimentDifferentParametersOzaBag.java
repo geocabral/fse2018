@@ -20,30 +20,34 @@ public class ExperimentDifferentParametersOzaBag {
 	
 	public static void main(String[] args) throws IOException {
 		
-		int[] ensembleSizes = {10, 30, 50}; 
-		double[] fadingFactors = {0.999, 0.99, 0.9};
+//		int[] ensembleSizes = {10, 30, 50}; 
+//		double[] fadingFactors = {0.999, 0.99, 0.9};
+		
+		int[] ensembleSizes = {10}; 
+		double[] fadingFactors = {0.999};
 		
 		
 		
 		
 		String cls = "WFLOzaBag";
 	    Random randomGenerator = new Random();
-		String[] datasets = {"fabric","camel","brackets","tomcat","jgroups", "neutron"};
+		//String[] datasets = {"fabric","camel","brackets","tomcat","jgroups", "neutron"};
+		String[] datasets = {"fabric"};
 	    
 		for(int d = 0; d < datasets.length; d++){
 			for(int i = 0; i < ensembleSizes.length; i++){
 				for(int j = 0; j < fadingFactors.length; j++){
 					
-					for(int r = 0; r < 5; r++){
+					for(int r = 0; r < 1; r++){
 						int randomInt = randomGenerator.nextInt(1000);					
 
 						//writer = new FileWriter("parametersSettings/"+dataset+i+"-"+j+cls+".txt");
 						
 						String task = "EvaluatePrequential -l (meta.WaitForLabelsOzaBag -s " + ensembleSizes[i]
-								+ ")  -s  (ArffFileStream -f (/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/PaperMarch2018/arffs/"
+								+ ")  -s  (ArffFileStream -f (/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/arffs/"
 								+ datasets[d] + ".arff) -c 15) -e (FadingFactorEachClassPerformanceEvaluator -a "
 								+ fadingFactors[j]
-								+ ") -f 1 -d /Users/georgegomescabral/ProjetosSoftwares/Java/workspace/PaperMarch2018/RQ2/ParamEval/"+datasets[d]+"/"
+								+ ") -f 1 -d /Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ2/ParamEval/"+datasets[d]+"/"
 								+ datasets[d] + "(" + ensembleSizes[i] + "-" + fadingFactors[j] + ")" + cls + r + ".csv";
 						System.out.println(task);
 						try {
