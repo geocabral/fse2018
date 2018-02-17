@@ -75,51 +75,31 @@ public class ChartParameterEval extends ApplicationFrame {
         // create subplot 1...
         XYDataset data1 = createDatasetOzaBag("0.9");
         //final XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
-        JFreeChart chart1 = ChartFactory.createXYLineChart("OzaBag (fad. fac. = 0.9)", "", "Performance", data1, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart chart1 = ChartFactory.createXYLineChart("fadding factor = 0.9)", "", "Performance", data1, PlotOrientation.VERTICAL, false, true, false);
         setChartStyle((XYPlot) chart1.getPlot());
         
-        //chart 2
-        XYDataset data2 = createDatasetARF("0.9");
-        JFreeChart chart2 = ChartFactory.createXYLineChart("ARF (fad. fac. = 0.9)", "", "", data2, PlotOrientation.VERTICAL, false, true, false);
-        setChartStyle((XYPlot) chart2.getPlot());
         
         
         XYDataset data3 = createDatasetOzaBag("0.99");
         //final XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
-        JFreeChart chart3 = ChartFactory.createXYLineChart("OzaBag (fad. fac. = 0.99)", "", "Performance", data3, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart chart3 = ChartFactory.createXYLineChart("fadding factor = 0.99)", "", "Performance", data3, PlotOrientation.VERTICAL, false, true, false);
         setChartStyle((XYPlot) chart3.getPlot());
         
-        //chart 2
-        XYDataset data4 = createDatasetARF("0.99");
-        JFreeChart chart4 = ChartFactory.createXYLineChart("ARF (fad. fac. = 0.99)", "", "", data4, PlotOrientation.VERTICAL, false, true, false);
-        setChartStyle((XYPlot) chart4.getPlot());
-
-        
+                
         XYDataset data5 = createDatasetOzaBag("0.999");
         //final XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
-        JFreeChart chart5 = ChartFactory.createXYLineChart("OzaBag (fad. fac. = 0.999)", "", "Performance", data5, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart chart5 = ChartFactory.createXYLineChart("fadding factor = 0.999)", "", "Performance", data5, PlotOrientation.VERTICAL, false, true, false);
         setChartStyle((XYPlot) chart5.getPlot());
-        
-        //chart 2
-        XYDataset data6 = createDatasetARF("0.999");
-        JFreeChart chart6 = ChartFactory.createXYLineChart("ARF (fad. fac. = 0.999)", "", "", data6, PlotOrientation.VERTICAL, false, true, false);
-        setChartStyle((XYPlot) chart6.getPlot());
         
         
         
         panel.add(new ChartPanel(chart1));
-        panel.add(new ChartPanel(chart2));
         panel.add(new ChartPanel(chart3));
-        panel.add(new ChartPanel(chart4));
         panel.add(new ChartPanel(chart5));
-        panel.add(new ChartPanel(chart6));
-
+        
         panel.addChart(chart1);
-        panel.addChart(chart2);
         panel.addChart(chart3);
-        panel.addChart(chart4);
         panel.addChart(chart5);
-        panel.addChart(chart6);
         
 //        panel.addChart(chart2);
 //        panel.addChart(chart3);
@@ -243,9 +223,9 @@ public class ChartParameterEval extends ApplicationFrame {
         
         for(int i = 0; i < 5; i++){
         	
-        	String ds = "fabric.arff(10-"+ff+")WFLOzaBag"+i+".csv";
+        	String ds = "fabric(10-"+ff+")WFLOzaBag"+i+".csv";
         	try {
-    			br = new BufferedReader(new FileReader("paramSettingsEval/" + ds));
+    			br = new BufferedReader(new FileReader("RQ2/ParamEval/" + ds));
     		} catch (FileNotFoundException e1) {
     			// TODO Auto-generated catch block
     			e1.printStackTrace();
