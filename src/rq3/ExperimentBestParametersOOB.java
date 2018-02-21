@@ -1,4 +1,4 @@
-package rq2;
+package rq3;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -9,21 +9,21 @@ import moa.tasks.EvaluatePrequential;
 import moa.tasks.MainTask;
 import moa.tasks.TaskThread;
 
-public class ExperimentBestParametersOzaBag {
+public class ExperimentBestParametersOOB {
 
 	static MainTask currentTask = new EvaluatePrequential();
 	static Writer writer; 
 	
-	public ExperimentBestParametersOzaBag(){
+	public ExperimentBestParametersOOB(){
 		
 	}
 	
 	public static void main(String[] args) throws IOException {
 		
-		int[] ensembleSizes = {30, 10, 10, 30, 50 , 30}; 
-		
+		int[] ensembleSizes = {10,10,10,30,50,10}; 
+		double[] theta = {0.99,0.999,0.9,0.99,0.9,0.99};
 		double fadingFactor = 0.99;
-		String cls = "WFLOzaBag";
+		String cls = "OOB";
 	    
 		String[] datasets = {"fabric","camel","brackets","tomcat","jgroups", "neutron"};
 		
@@ -45,12 +45,12 @@ public class ExperimentBestParametersOzaBag {
 						
 						//writer = new FileWriter("parametersSettings/"+dataset+i+"-"+j+cls+".txt");
 						
-						String task = "EvaluatePrequential -l (meta.WaitForLabelsOzaBag -s " + ensembleSizes[d]
-								+ ")  -s  (ArffFileStream -f ("+path+"arffs/"
+						String task = "EvaluatePrequential -l (meta.WaitForLabelsOOB -s " + ensembleSizes[d]
+								+ " -t "+theta[d]+")  -s  (ArffFileStream -f ("+path+"arffs/"
 								+ datasets[d] + ".arff) -c 15) -e (FadingFactorEachClassPerformanceEvaluator -a "
 								+ fadingFactor
-								+ ") -f 1 -d "+path+"RQ2/BestParamExp/"+datasets[d]+"/"
-								+ datasets[d] + "(" + ensembleSizes[d] + "-" + fadingFactor + ")" + cls + r + ".csv";
+								+ ") -f 1 -d "+path+"RQ3/BestParamExp/oob/"+datasets[d]+"/"
+								+ datasets[d] + "(" + ensembleSizes[d] + "-" + theta[d] + ")" + cls + r + ".csv";
 						System.out.println(task);
 						try {
 				            currentTask = (MainTask) ClassOption.cliStringToObject(

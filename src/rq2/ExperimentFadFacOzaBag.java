@@ -9,23 +9,22 @@ import moa.tasks.EvaluatePrequential;
 import moa.tasks.MainTask;
 import moa.tasks.TaskThread;
 
-public class ExperimentBestParametersOzaBag {
+public class ExperimentFadFacOzaBag {
 
 	static MainTask currentTask = new EvaluatePrequential();
 	static Writer writer; 
 	
-	public ExperimentBestParametersOzaBag(){
+	public ExperimentFadFacOzaBag(){
 		
 	}
 	
 	public static void main(String[] args) throws IOException {
 		
-		int[] ensembleSizes = {30, 10, 10, 30, 50 , 30}; 
-		
-		double fadingFactor = 0.99;
+		int[] ensembleSizes = {10}; 
+		double[] fadingFactors = {0.999, 0.99, 0.9};
 		String cls = "WFLOzaBag";
 	    
-		String[] datasets = {"fabric","camel","brackets","tomcat","jgroups", "neutron"};
+		String[] datasets = {"brackets"};
 		
 		String pathWindows = "C:/ProjetosSoftware/fse2018/";
 		String pathMac = "/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/";
@@ -39,18 +38,18 @@ public class ExperimentBestParametersOzaBag {
 			path = pathMac;
 		}
 		
-		for(int d = 0; d < datasets.length; d++){
-					for(int r = 0; r < 30; r++){
+		for(int d = 0; d < fadingFactors.length; d++){
+					for(int r = 0; r < 1; r++){
 		
 						
 						//writer = new FileWriter("parametersSettings/"+dataset+i+"-"+j+cls+".txt");
 						
-						String task = "EvaluatePrequential -l (meta.WaitForLabelsOzaBag -s " + ensembleSizes[d]
+						String task = "EvaluatePrequential -l (meta.WaitForLabelsOzaBag -s " + ensembleSizes[0]
 								+ ")  -s  (ArffFileStream -f ("+path+"arffs/"
-								+ datasets[d] + ".arff) -c 15) -e (FadingFactorEachClassPerformanceEvaluator -a "
-								+ fadingFactor
-								+ ") -f 1 -d "+path+"RQ2/BestParamExp/"+datasets[d]+"/"
-								+ datasets[d] + "(" + ensembleSizes[d] + "-" + fadingFactor + ")" + cls + r + ".csv";
+								+ datasets[0] + ".arff) -c 15) -e (FadingFactorEachClassPerformanceEvaluator -a "
+								+ fadingFactors[d]
+								+ ") -f 1 -d "+path+"RQ2/fadfac/"
+								+ datasets[0] + "(" + ensembleSizes[0] + "-" + fadingFactors[d] + ")" + cls + r + ".csv";
 						System.out.println(task);
 						try {
 				            currentTask = (MainTask) ClassOption.cliStringToObject(

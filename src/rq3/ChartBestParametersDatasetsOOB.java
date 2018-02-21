@@ -1,4 +1,4 @@
-package chartspart2;
+package rq3;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -31,14 +31,14 @@ import demo.DemoPanel;
 import entities.Sample;
 import util.Util;
 
-public class ChartParameterEval extends ApplicationFrame {
+public class ChartBestParametersDatasetsOOB extends ApplicationFrame {
 
     /**
      * Constructs a new demonstration application.
      *
      * @param title  the frame title.
      */
-    public ChartParameterEval(final String title) {
+    public ChartBestParametersDatasetsOOB(final String title) {
 
         super(title);
         setContentPane(createDemoPanel());
@@ -68,38 +68,64 @@ public class ChartParameterEval extends ApplicationFrame {
      */
     private DemoPanel createDemoPanel() {
 
-    	DemoPanel panel = new DemoPanel(new GridLayout(1, 3));
+    	DemoPanel panel = new DemoPanel(new GridLayout(3, 2));
     	
-    	
+    	int[] ensembleSizes = {10,10,10,30,50,10}; 
+		double[] theta = {0.99,0.999,0.9,0.99,0.9,0.99};
+		double fadingFactor = 0.99;
+		String cls = "OOB";
+	    
+		String[] datasets = {"fabric","camel","brackets","tomcat","jgroups", "neutron"};
+		
     	
         // create subplot 1...
-        XYDataset data1 = createDatasetOzaBag("0.9");
+        XYDataset data1 = createDatasetOob(datasets[0],ensembleSizes[0],theta[0]);
         //final XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
-        JFreeChart chart1 = ChartFactory.createXYLineChart("fadding factor = 0.9)", "", "Performance", data1, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart chart1 = ChartFactory.createXYLineChart(datasets[0], "", "Performance", data1, PlotOrientation.VERTICAL, false, true, false);
         setChartStyle((XYPlot) chart1.getPlot());
         
+        //chart 2
+        XYDataset data2 = createDatasetOob(datasets[1],ensembleSizes[1],theta[1]);
+        JFreeChart chart2 = ChartFactory.createXYLineChart(datasets[1], "", "", data2, PlotOrientation.VERTICAL, false, true, false);
+        setChartStyle((XYPlot) chart2.getPlot());
         
         
-        XYDataset data3 = createDatasetOzaBag("0.99");
+        XYDataset data3 = createDatasetOob(datasets[2],ensembleSizes[2],theta[2]);
         //final XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
-        JFreeChart chart3 = ChartFactory.createXYLineChart("fadding factor = 0.99)", "", "Performance", data3, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart chart3 = ChartFactory.createXYLineChart(datasets[2], "", "Performance", data3, PlotOrientation.VERTICAL, false, true, false);
         setChartStyle((XYPlot) chart3.getPlot());
         
-                
-        XYDataset data5 = createDatasetOzaBag("0.999");
+        //chart 2
+        XYDataset data4 = createDatasetOob(datasets[3],ensembleSizes[3],theta[3]);
+        JFreeChart chart4 = ChartFactory.createXYLineChart(datasets[3], "", "", data4, PlotOrientation.VERTICAL, false, true, false);
+        setChartStyle((XYPlot) chart4.getPlot());
+
+        
+        XYDataset data5 = createDatasetOob(datasets[4],ensembleSizes[4],theta[4]);
         //final XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
-        JFreeChart chart5 = ChartFactory.createXYLineChart("fadding factor = 0.999)", "", "Performance", data5, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart chart5 = ChartFactory.createXYLineChart(datasets[4], "", "Performance", data5, PlotOrientation.VERTICAL, false, true, false);
         setChartStyle((XYPlot) chart5.getPlot());
+        
+        //chart 2
+        XYDataset data6 = createDatasetOob(datasets[5],ensembleSizes[5],theta[5]);
+        JFreeChart chart6 = ChartFactory.createXYLineChart(datasets[5], "", "", data6, PlotOrientation.VERTICAL, false, true, false);
+        setChartStyle((XYPlot) chart6.getPlot());
         
         
         
         panel.add(new ChartPanel(chart1));
+        panel.add(new ChartPanel(chart2));
         panel.add(new ChartPanel(chart3));
+        panel.add(new ChartPanel(chart4));
         panel.add(new ChartPanel(chart5));
-        
+        panel.add(new ChartPanel(chart6));
+
         panel.addChart(chart1);
+        panel.addChart(chart2);
         panel.addChart(chart3);
+        panel.addChart(chart4);
         panel.addChart(chart5);
+        panel.addChart(chart6);
         
 //        panel.addChart(chart2);
 //        panel.addChart(chart3);
@@ -112,13 +138,12 @@ public class ChartParameterEval extends ApplicationFrame {
 
     
     
-    
     /**
      * Creates a sample dataset.
      *
      * @return Series 2.
      */
-    private XYDataset createDatasetOzaBag(String ff) {
+    private XYDataset createDatasetOob(String ds, int ens, double theta) {
 
         // create dataset 1...
         final XYSeries series1 = new XYSeries("recall-0");
@@ -132,11 +157,11 @@ public class ChartParameterEval extends ApplicationFrame {
         
         BufferedReader br = null;
         
-        for(int i = 0; i < 1; i++){
+        for(int i = 0; i < 30; i++){
         	
-        	String ds = "brackets(10-"+ff+")WFLOzaBag"+i+".csv";
+        	String file = ds+"("+ens+"-"+theta+")OOB"+i+".csv";
         	try {
-    			br = new BufferedReader(new FileReader("RQ2/fadfac/" + ds));
+    			br = new BufferedReader(new FileReader("RQ3/BestParamExp/oob/" + ds+"/"+file));
     		} catch (FileNotFoundException e1) {
     			// TODO Auto-generated catch block
     			e1.printStackTrace();
@@ -191,9 +216,9 @@ public class ChartParameterEval extends ApplicationFrame {
         }
         
         for(int i = 0; i < recall0.size()-1; i++){
-        	series1.add(i, recall0.get(i)/5);
-        	series2.add(i, recall1.get(i)/5);
-        	series3.add(i, Math.sqrt((recall1.get(i)/5) * (recall0.get(i)/5)));
+        	series1.add(i, recall0.get(i)/30);
+        	series2.add(i, recall1.get(i)/30);
+        	series3.add(i, Math.sqrt((recall1.get(i)/30) * (recall0.get(i)/30)));
         }
         
         final XYSeriesCollection collection = new XYSeriesCollection();
@@ -222,7 +247,7 @@ public class ChartParameterEval extends ApplicationFrame {
      */
     public static void main(final String[] args) {
 
-    	final ChartParameterEval demo = new ChartParameterEval("CombinedDomainXYPlot Demo");
+    	final ChartBestParametersDatasetsOOB demo = new ChartBestParametersDatasetsOOB("CombinedDomainXYPlot Demo");
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
