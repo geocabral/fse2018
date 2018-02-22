@@ -4,6 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,15 +24,12 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-
-
 public class Janela extends JPanel implements Render {
 
 	static JFrame frm = null;
 
 	static int idxColor = 0;
-	static Color[] colors = { Color.BLUE, Color.RED, Color.GREEN, Color.CYAN,
-			Color.GRAY, Color.ORANGE };
+	static Color[] colors = { Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.GRAY, Color.ORANGE };
 
 	static XYSeries series = new XYSeries("normais");
 
@@ -36,8 +38,6 @@ public class Janela extends JPanel implements Render {
 	static JFreeChart chart = null;
 
 	static XYSeriesCollection xyDataset = new XYSeriesCollection();
-
-	
 
 	static int idxSerie = 2;
 
@@ -48,7 +48,7 @@ public class Janela extends JPanel implements Render {
 	static double[] coordsX = new double[100];
 	static double[] coordsY = new double[100];
 	static double[][] pontosGeracaoCurva = new double[100][100];
-	
+
 	static Double C = 1.0;
 	static Double sigma = 1.0;
 
@@ -56,63 +56,97 @@ public class Janela extends JPanel implements Render {
 
 	}
 
-	
-	
-
 	public static void main(String args[]) {
 
+		// double[][] vetTest = new double[100][100];
+		// double[] coordsx = new double[100];
+		// double[] coordsy = new double[100];
+		// int ct = 0;
+		// for(int i = 0; i < 100; i++){
+		// coordsx[i] = i/new Double(100);
+		// coordsy[i] = i/new Double(100);
+		// for(int j = 0; j < 100; j++){
+		//
+		// if((i*j) < 4000){
+		// vetTest[i][j] = -1;
+		// }else{
+		// vetTest[i][j] = 1;
+		// }
+		//
+		// }
+		// }
 
-
-		double[][] vetTest = new double[100][100];
-		double[] coordsx = new double[100];
-		double[] coordsy = new double[100];
-		int ct = 0;
-		for(int i = 0; i < 100; i++){
-			coordsx[i] = i/new Double(100);
-			coordsy[i] = i/new Double(100);
-			for(int j = 0; j < 100; j++){
-			
-				if((i*j) < 4000){
-					vetTest[i][j] = -1;
-				}else{
-					vetTest[i][j] = 1;
-				}
-				
-			}
+		FileReader in = null;
+		try {
+			in = new FileReader("RQ4/outs10000.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-				boolean addPontos = true;
+		BufferedReader br = new BufferedReader(in);
+
+		double[][] vetTest = new double[20][20];
+		double[] coordsx = new double[20];
+		double[] coordsy = new double[20];
+
+		for (int i = 1; i < 20; i++) {
+			coordsx[i] = coordsx[i - 1] + 0.25;
+		}
+
+		for (int j = 1; j < 20; j++) {
+			coordsy[j] = coordsy[j - 1] + 140;
+		}
+
+		String strAux = "";
+		int ctX = 0;
+		try {
+			while ((strAux = br.readLine()) != null && ctX < 20) {
+				StringTokenizer strTok = new StringTokenizer(strAux, "\t");
+
+				for (int j = 0; j < 20; j++) {
+					vetTest[ctX][j] = new Double(strTok.nextToken());
+				}
+
+				ctX++;
+
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		boolean addPontos = false;
 
 		if (addPontos)
 			plotaModelo(vetTest);
 		else {
 			plotaModelo(vetTest);
 
-			//xyDataset.removeSeries(0);
-			//idxSerie--;
+			// xyDataset.removeSeries(0);
+			// idxSerie--;
 		}
 
 		double[] z = new double[1];
 		// ocsvm
-		z[0] = 0.5;
+		z[0] = 5.;
 		// z[0] = -0.001;
 
 		// contour(pontosGeracaoCurva, lowerBoundX, upperBoundX, lowerBoundY,
 		// upperBoundY, coordsX, coordsY, 1, z);
-		contour(vetTest, 0, 99, 0, 99, coordsx, coordsy, 1, z);
+		contour(vetTest, 0, 19, 0, 19, coordsx, coordsy, 1, z);
 
-//		try {
-//			saveChartToSVG(chart, "teste3.svg", 600, 400);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try {
+		// saveChartToSVG(chart, "teste3.svg", 600, 400);
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 		System.out.println("Fim");
 	}
-
-	
 
 	public static void criaCoordsXY() {
 
@@ -128,38 +162,34 @@ public class Janela extends JPanel implements Render {
 
 	}
 
-	
-	
-	
-
 	public static void plotaModelo(double[][] tes) {
 
-		XYSeries series = new XYSeries("normais");
-		XYSeries series2 = new XYSeries("novidade");
-		
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				if(tes[i][j] < 0){
-					if(i*j%50 == 0){
-						series.add(i/new Double(100), j/new Double(100));	
-					}
-					
-				}	
-			}
-		}
-		
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				if(tes[i][j] >= 0){
-					if(i*j%50 == 0){
-						series2.add(i/new Double(100), j/new Double(100));	
-					}	
-				}	
-			}
-		}
-
-		xyDataset.addSeries(series);
-		xyDataset.addSeries(series2);
+//		XYSeries series = new XYSeries("normais");
+//		XYSeries series2 = new XYSeries("novidade");
+//
+//		for (int i = 0; i < 100; i++) {
+//			for (int j = 0; j < 100; j++) {
+//				if (tes[i][j] < 0) {
+//					if (i * j % 50 == 0) {
+//						series.add(i / new Double(100), j / new Double(100));
+//					}
+//
+//				}
+//			}
+//		}
+//
+//		for (int i = 0; i < 100; i++) {
+//			for (int j = 0; j < 100; j++) {
+//				if (tes[i][j] >= 0) {
+//					if (i * j % 50 == 0) {
+//						series2.add(i / new Double(100), j / new Double(100));
+//					}
+//				}
+//			}
+//		}
+//
+//		xyDataset.addSeries(series);
+//		xyDataset.addSeries(series2);
 
 		chart = ChartFactory.createScatterPlot("Artificial data set", // Title
 				"X", // X-Axis label
@@ -169,7 +199,7 @@ public class Janela extends JPanel implements Render {
 				false, // include legend
 				true, // tooltips
 				false // urls
-				);
+		);
 
 		plot = chart.getXYPlot();
 		plot.setRangeGridlinesVisible(false);
@@ -177,7 +207,7 @@ public class Janela extends JPanel implements Render {
 
 		renderer.setSeriesLinesVisible(0, false);
 		renderer.setSeriesLinesVisible(1, false);
-		
+
 		renderer.setSeriesPaint(0, Color.BLUE);
 		renderer.setSeriesPaint(1, Color.GREEN);
 		// Shape cross = ShapeUtils.createDiagonalCross(3, 1);
@@ -202,11 +232,7 @@ public class Janela extends JPanel implements Render {
 
 	}
 
-	
-
-	
-	public static void quicksort(Double[] vet, int left, int right)
-			throws CloneNotSupportedException {
+	public static void quicksort(Double[] vet, int left, int right) throws CloneNotSupportedException {
 		int i, j;
 		Double tmp;
 		Double mid;
@@ -234,8 +260,7 @@ public class Janela extends JPanel implements Render {
 	}
 
 	@Override
-	public void drawContour(double startX, double startY, double endX,
-			double endY) {
+	public void drawContour(double startX, double startY, double endX, double endY) {
 		// TODO Auto-generated method stub
 
 	}
@@ -245,8 +270,8 @@ public class Janela extends JPanel implements Render {
 	private static double[] xh = new double[5];
 	private static double[] yh = new double[5];
 
-	public static void contour(double[][] d, int ilb, int iub, int jlb,
-			int jub, double[] x, double[] y, int nc, double[] z) {
+	public static void contour(double[][] d, int ilb, int iub, int jlb, int jub, double[] x, double[] y, int nc,
+			double[] z) {
 		int m1;
 		int m2;
 		int m3;
@@ -269,8 +294,7 @@ public class Janela extends JPanel implements Render {
 		// because
 		// Fortran and C/C++ arrays are transposed of each other, in this case
 		// it is more tricky as castab is in 3 dimension
-		int[][][] castab = { { { 0, 0, 8 }, { 0, 2, 5 }, { 7, 6, 9 } },
-				{ { 0, 3, 4 }, { 1, 3, 1 }, { 4, 3, 0 } },
+		int[][][] castab = { { { 0, 0, 8 }, { 0, 2, 5 }, { 7, 6, 9 } }, { { 0, 3, 4 }, { 1, 3, 1 }, { 4, 3, 0 } },
 				{ { 9, 6, 7 }, { 5, 2, 0 }, { 8, 0, 0 } } };
 
 		for (j = (jub - 1); j >= jlb; j--) {
@@ -291,8 +315,7 @@ public class Janela extends JPanel implements Render {
 									// The indexing of im and jm should be noted
 									// as it has to
 									// start from zero
-									h[m] = d[i + im[m - 1]][j + jm[m - 1]]
-											- z[k];
+									h[m] = d[i + im[m - 1]][j + jm[m - 1]] - z[k];
 									xh[m] = x[i + im[m - 1]];
 									yh[m] = y[j + jm[m - 1]];
 								} else {
@@ -418,28 +441,24 @@ public class Janela extends JPanel implements Render {
 									}
 									// Put your processing code here and comment
 									// out the printf
-									// printf("%f %f %f %f %f\n",x1,y1,x2,y2,z[k]);
+									// printf("%f %f %f %f
+									// %f\n",x1,y1,x2,y2,z[k]);
 									// render.drawContour(x1,y1,x2,y2,z[k]);
 									// sem o z[k]
 									// render.drawContour(x1,y1,x2,y2);
 
-									XYSeries s = new XYSeries("serie "
-											+ idxSerie);
+									XYSeries s = new XYSeries("serie " + idxSerie);
 
 									s.add(x1, y1);
 									s.add(x2, y2);
 
-									renderer.setSeriesShapesVisible(idxSerie,
-											false);
+									renderer.setSeriesShapesVisible(idxSerie, false);
 									// renderer.setSeriesShapesFilled(idxSerie,
 									// false);
-									renderer.setSeriesLinesVisible(idxSerie,
-											true);
-									renderer.setSeriesStroke(idxSerie,
-											new BasicStroke(1.5f));
+									renderer.setSeriesLinesVisible(idxSerie, true);
+									renderer.setSeriesStroke(idxSerie, new BasicStroke(1.5f));
 
-									renderer.setSeriesPaint(idxSerie,
-											Color.BLACK);
+									renderer.setSeriesPaint(idxSerie, Color.BLACK);
 
 									idxSerie++;
 
