@@ -192,8 +192,8 @@ public class Janela extends JPanel implements Render {
 //		xyDataset.addSeries(series2);
 
 		chart = ChartFactory.createScatterPlot("Artificial data set", // Title
-				"X", // X-Axis label
-				"Y", // Y-Axis label
+				"NS", // X-Axis label
+				"NUC", // Y-Axis label
 				xyDataset, // Dataset
 				PlotOrientation.VERTICAL, // data
 				false, // include legend
