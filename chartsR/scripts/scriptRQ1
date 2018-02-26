@@ -1,0 +1,48 @@
+par(mfrow=c(3,2),oma = c(1,1,1,1),
+          mar=c(3,3,3,3))
+
+plotclr <- c("#0000ff", "#FF0000")
+par(cex.axis = 0.8)
+
+df1 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/chartsR/data/RQ1/BracketsIR.txt",
+header = TRUE)
+ts.plot(df1, ylim=c(0,1), gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="%dataset", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Brackets", line = 0.2)
+legend(x = "topleft", legend = colnames(df1), lty = 1, adj = 0.05, cex = 0.7, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df2 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/chartsR/data/RQ1/CamelIR.txt",
+header = TRUE)
+ts.plot(df2,  ylim=c(0,1), gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="%dataset", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Camel", line = 0.2)
+legend(x = "topleft", legend = colnames(df2), lty = 1, adj = 0.05, cex = 0.7, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+
+df3 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/chartsR/data/RQ1/FabricIR.txt",
+header = TRUE)
+ts.plot(df3, ylim=c(0,1), gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="%dataset", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Fabric", line = 0.2)
+legend(x = "topleft", legend = colnames(df3), lty = 1, adj = 0.05, cex = 0.7, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df4 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/chartsR/data/RQ1/JGroupsIR.txt",
+header = TRUE)
+ts.plot(df4, ylim=c(0,1), gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="%dataset", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "JGroups", line = 0.2)
+legend(x = "topleft", legend = colnames(df4), lty = 1, adj = 0.05, cex = 0.7, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df5 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/chartsR/data/RQ1/NeutronIR.txt",
+header = TRUE)
+ts.plot(df5, ylim=c(0,1), gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="%dataset", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Neutron", line = 0.2)
+legend(x = "topleft", legend = colnames(df5), lty = 1, adj = 0.05, cex = 0.7, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df6 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/chartsR/data/RQ1/TomcatIR.txt",
+header = TRUE)
+ts.plot(df6, ylim=c(0,1), gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="%dataset", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Tomcat", line = 0.2)
+legend(x = "topleft", legend = colnames(df6), lty = 1, adj = 0.05, cex = 0.7, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')

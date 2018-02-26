@@ -25,6 +25,8 @@ public class ExperimentBestParametersOOB {
 		double fadingFactor = 0.99;
 		String cls = "OOB";
 	    
+		String dataset = "";
+		
 		String[] datasets = {"fabric","camel","brackets","tomcat","jgroups", "neutron"};
 		
 		String pathWindows = "C:/ProjetosSoftware/fse2018/";
@@ -39,17 +41,17 @@ public class ExperimentBestParametersOOB {
 			path = pathMac;
 		}
 		
+		int r = 0;
 		for(int d = 0; d < datasets.length; d++){
-					for(int r = 0; r < 30; r++){
-		
-						
+					
+						dataset = datasets[d];
 						//writer = new FileWriter("parametersSettings/"+dataset+i+"-"+j+cls+".txt");
 						
 						String task = "EvaluatePrequential -l (meta.WaitForLabelsOOB -s " + ensembleSizes[d]
 								+ " -t "+theta[d]+")  -s  (ArffFileStream -f ("+path+"arffs/"
 								+ datasets[d] + ".arff) -c 15) -e (FadingFactorEachClassPerformanceEvaluator -a "
 								+ fadingFactor
-								+ ") -f 1 -d "+path+"RQ3/BestParamExp/oob/"+datasets[d]+"/"
+								+ ") -f 1 -d "+path+"RQ4/"
 								+ datasets[d] + "(" + ensembleSizes[d] + "-" + theta[d] + ")" + cls + r + ".csv";
 						System.out.println(task);
 						try {
@@ -65,10 +67,6 @@ public class ExperimentBestParametersOOB {
 						TaskThread thread = new TaskThread((moa.tasks.Task) currentTask);
 
 						thread.start();
-						
-						
-					
-					}
 					
 
 			}	

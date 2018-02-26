@@ -1,0 +1,92 @@
+par(mfrow=c(6,2),oma = c(1,1,1,1),
+          mar = c(1,1,1,1))
+par(pin=c(1.8,0.61))
+
+plotclr <- brewer.pal(8, "Accent")
+par(cex.axis = 0.8)
+
+df1 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/rootsBracketsProc.txt",
+header = TRUE)
+ts.plot(df1,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Brackets (roots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df1), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df2 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/subRootsBracketsProc.txt",
+header = TRUE)
+ts.plot(df2,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Brackets (subroots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df2), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+
+df3 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/rootsCamelProc.txt",
+header = TRUE)
+ts.plot(df3,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Camel (roots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df3), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df4 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/subRootsCamelProc.txt",
+header = TRUE)
+ts.plot(df4,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Camel (subroots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df4), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df5 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/rootsFabricProc.txt",
+header = TRUE)
+ts.plot(df5,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Fabric (roots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df5), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df6 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/subRootsFabricProc.txt",
+header = TRUE)
+ts.plot(df6,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Fabric (subroots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df6), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df7 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/rootsJGroupsProc.txt",
+header = TRUE)
+ts.plot(df7,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "JGroups (roots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df7), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df8 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/subRootsJGroupsProc.txt",
+header = TRUE)
+ts.plot(df8,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "JGroups (subroots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df8), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df9 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/rootsNeutronProc.txt",
+header = TRUE)
+ts.plot(df9,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Neutron (roots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df9), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df10 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/subRootsNeutronProc.txt",
+header = TRUE)
+ts.plot(df10,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Neutron (subroots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df10), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+
+df11 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/rootsTomcatProc.txt",
+header = TRUE)
+ts.plot(df11,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Tomcat (roots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df11), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
+
+df12 <- read.table("/Users/georgegomescabral/ProjetosSoftwares/Java/workspace/fse2018/RQ4/subRootsTomcatProc.txt",
+header = TRUE)
+ts.plot(df12,  gpars= list(xlab="", ylab="", col=plotclr , lwd=1.5))
+title(ylab="#nodes", xlab="time", mgp=c(2,1,0), cex.lab=1.0)
+title(main = "Tomcat (subroots)", line = 0.2)
+legend(x = "topleft", legend = colnames(df12), lty = 1, adj = 0.05, cex = 0.4, lwd=2 ,col = plotclr, y.intersp = 0.7, bty = 'n')
